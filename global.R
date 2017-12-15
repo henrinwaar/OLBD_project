@@ -1,8 +1,8 @@
 library(SPARQL)
 library(dplyr)
-library(XML)
+#library(XML)
 library(sqldf)
-library(stringdist)
+#library(stringdist)
 
 source("helpers.R")
 
