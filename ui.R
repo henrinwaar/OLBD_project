@@ -1,6 +1,5 @@
 library(leaflet)
 
-# Choices for drop-downs
 
 navbarPage("Park", id="nav",
       

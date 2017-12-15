@@ -1,38 +1,28 @@
-# Note: percent map is designed to work with the counties data set
-# It may not work correctly with other data sets if their row order does 
-# not exactly match the order in which the maps package plots counties
-percent_map <- function(var, color, legend.title, min = 0, max = 100) {
+utf8decode <- function(string){
+  string = gsub("Ã©", "é", string)
+  string = gsub("Ãª", "ê", string)
+  string = gsub("Ã¨", "è", string)
+  string = gsub("Ã¶", "ö", string)
+  string = gsub("Ã«", "ë", string)
+  string = gsub("Ã§", "ç", string)
+  string = gsub("Ã¢", "â", string)
+  string = gsub("Ã´", "ô", string)
+  string = gsub("Ã®", "î", string)
+  string = gsub("Ã", "à", string)
+}
 
-  # generate vector of fill colors for map
-  shades <- colorRampPalette(c("white", color))(100)
-  
-  # constrain gradient to percents that occur between min and max
-  var <- pmax(var, min)
-  var <- pmin(var, max)
-  percents <- as.integer(cut(var, 100, 
-    include.lowest = TRUE, ordered = TRUE))
-  fills <- shades[percents]
+source.utf8 <- function(f) {
+  l <- readLines(f, encoding="UTF-8")
+  eval(parse(text=l),envir=.GlobalEnv)
+}
 
-  # plot choropleth map
-  map("county", fill = TRUE, col = fills, 
-    resolution = 0, lty = 0, projection = "polyconic", 
-    myborder = 0, mar = c(0,0,0,0))
-  
-  # overlay state borders
-  map("state", col = "white", fill = FALSE, add = TRUE,
-    lty = 1, lwd = 1, projection = "polyconic", 
-    myborder = 0, mar = c(0,0,0,0))
-  
-  # add a legend
-  inc <- (max - min) / 4
-  legend.text <- c(paste0(min, " % or less"),
-    paste0(min + inc, " %"),
-    paste0(min + 2 * inc, " %"),
-    paste0(min + 3 * inc, " %"),
-    paste0(max, " % or more"))
-  
-  legend("bottomleft", 
-    legend = legend.text, 
-    fill = shades[c(1, 25, 50, 75, 100)], 
-    title = legend.title)
+giveHTMLContent <- function(name, surface, description, adress, image){
+  content = paste(sep = "<br/><br/>",
+                  paste("<h4> ", gsub("_", " ", name), " </h4>"),
+                  paste0("<img src =" , image, ' width="300" height="300">'),
+                  utf8decode(paste("<b> Location: </b> &nbsp &nbsp ", adress)),
+                  paste("<b> Surface: </b> &nbsp &nbsp", surface, "m2", sep = " "),
+                  utf8decode(gsub("@en", "", gsub("@fr", "", description)))
+  )
+  return(content)
 }
