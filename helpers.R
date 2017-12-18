@@ -18,7 +18,7 @@ source.utf8 <- function(f) {
 
 giveHTMLContent <- function(name, surface, description, adress, image){
   content = paste(sep = "<br/><br/>",
-                  paste("<h4> ", gsub("_", " ", name), " </h4>"),
+                  paste("<h4> ", utf8decode(gsub("_", " ", name)), " </h4>"),
                   paste0("<img src =" , image, ' width="300" height="300">'),
                   utf8decode(paste("<b> Location: </b> &nbsp &nbsp ", adress)),
                   paste("<b> Surface: </b> &nbsp &nbsp", surface, "m2", sep = " "),
