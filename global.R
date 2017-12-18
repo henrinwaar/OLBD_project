@@ -17,7 +17,7 @@ cleanData <- data %>%
 # Step 1 - Set up preliminaries and define query
 # Define the endpoints
 endpoint <- "http://fr.dbpedia.org/sparql"
-endpoint2 <- "http://192.168.0.17:8890/sparql/"
+endpoint2 <- "http://localhost:8890/sparql/"
 
 # create query statement
 query <-
